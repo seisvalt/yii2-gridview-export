@@ -1,0 +1,43 @@
+{
+    "name": "seisvalt/yii2-gridview-export",
+    "description": "Extension for griview of kartik",
+    "keywords": ["yii2", "gridview", "export", "kartik", "pdf"],
+    "type": "yii2-extension",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Jose Vargas",
+            "email": "jl.vargass@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": ">=2.0.14",
+        "kartik-v/yii2-grid": "dev-master",
+        "kartik-v/yii2-mpdf": "dev-master",
+        "kartik-v/yii2-export": "dev-master",
+        "php": ">=7.0"
+    },
+    "require-dev": {
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": { "seisvalt\\widgets\\": "src" }
+    },
+    "extra": {
+        "composer-exit-on-patch-failure": true,
+        "patches": {
+            "phpunit/phpunit-mock-objects": {
+                "Fix PHP 7 and 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_mock_objects.patch"
+            },
+            "phpunit/phpunit": {
+                "Fix PHP 7 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php7.patch",
+                "Fix PHP 8 compatibility": "https://yiisoft.github.io/phpunit-patches/phpunit_php8.patch"
+            }
+        }
+    }
+}
