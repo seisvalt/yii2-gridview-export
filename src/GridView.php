@@ -3,8 +3,9 @@ namespace seisvalt\widgets;
 
 use yii\base\Widget;
 use kartik\export\ExportMenu;
-use kartik\grid\GridView;
+use kartik\grid\GridView as KGrid;
 use yii\helpers\Html;
+use Yii;
 
 class GridView extends Widget
 {
@@ -65,7 +66,7 @@ class GridView extends Widget
             ],
         ]);
 
-        GridView::widget([
+        return KGrid::widget([
             'dataProvider' => $this->dataProvider,
             'filterModel' => $this->searchModel,
             'columns' => $this->gridColumns,
