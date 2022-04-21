@@ -13,10 +13,17 @@ class GridView extends Widget
     public $gridColumns;
     public $searchModel;
     public $pdfConfig;
+    public $createButton;
+    private $panel;
 
     public function init()
     {
         parent::init();
+        $this->panel = [
+            'type' => 'blue',
+            'heading' => '<i class="fas fa-book"></i>  ' .  Yii::t('app', 'List'),
+            'after' => false,
+        ];
 
         if(!$this->pdfConfig) {
             $this->pdfConfig =  [
@@ -30,6 +37,9 @@ class GridView extends Widget
                     'SetKeywords' => 'Yii2, Export, PDF, MPDF, Output, GridView, Grid, yii2-grid, yii2-mpdf, yii2-export',
                 ]
             ];
+        }
+        if ($this->createButton) {
+            $this->panel['before'] = $this->createButton;
         }
     }
 
@@ -75,6 +85,7 @@ class GridView extends Widget
                     'options' => ['class' => 'btn-group-sm mr-2'],
                 ],
                 '{export}',
+                '{toggleData}',
             ],
             'exportContainer' => [
                 'class' => 'btn-group-sm mr-2 me-2'
@@ -92,11 +103,7 @@ class GridView extends Widget
                 ]
             ],
             'responsive' => true,
-            'panel' => [
-                'type' => 'blue',
-                'heading' => '<i class="fas fa-book"></i>  ' .  Yii::t('app', 'List'),
-                'after' => false,
-            ],
+            'panel' => $this->panel,
         ]);
     }
 }
