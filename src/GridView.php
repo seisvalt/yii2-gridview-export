@@ -15,6 +15,7 @@ class GridView extends Widget
     public $pdfConfig;
     public $createButton;
     private $panel;
+    public $removeAction = false;
 
     public function init()
     {
@@ -52,7 +53,7 @@ class GridView extends Widget
 
         $fullExportMenu = ExportMenu::widget([
             'dataProvider' => $this->dataProvider,
-            'columns' => $this->gridColumns,
+            'columns' => self::cleanColumns(),
             'target' => ExportMenu::TARGET_BLANK,
             'asDropdown' => false,
             'pjaxContainerId' => 'kv-pjax-container',
@@ -62,11 +63,7 @@ class GridView extends Widget
                 ExportMenu::FORMAT_EXCEL => false,
                 ExportMenu::FORMAT_CSV => $customDropdown,
                 ExportMenu::FORMAT_EXCEL_X => $customDropdown,
-                ExportMenu::FORMAT_PDF => [
-                    'options' => ['tag' => false],
-                    'linkOptions' => ['class' => 'dropdown-item'],
-                    'pdfConfig' => $this->pdfConfig
-                ],
+                ExportMenu::FORMAT_PDF => false,
             ],
             'exportContainer' => [
             ],
@@ -93,7 +90,7 @@ class GridView extends Widget
             'exportConfig' => [
                 'csv' => [],
                 'xls' => [],
-                'pdf' => [],
+             //   'pdf' => [],
             ],
             'export' => [
                 'itemsAfter'=> [
@@ -105,5 +102,27 @@ class GridView extends Widget
             'responsive' => true,
             'panel' => $this->panel,
         ]);
+    }
+
+    public function cleanColumns() {
+        $export = [];
+
+        foreach ($this->gridColumns as $gridColumn) {
+
+            if (is_array($gridColumn)) {
+                unset($gridColumn['filterType']);
+                unset($gridColumn['filterWidgetOptions']);
+                unset($gridColumn['filterInputOptions']);
+                unset($gridColumn['filterWidgetOptions']);
+                unset($gridColumn['filter']);
+
+            }
+            $export[] = $gridColumn;
+        }
+
+        if ($this->removeAction) {
+            array_pop($export);
+        }
+        return $export;
     }
 }
